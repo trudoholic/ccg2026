@@ -16,9 +16,16 @@ function App() {
         </ul>
       </aside>
 
-      <main className="p-6">
-        <h2 className="text-xl font-semibold mb-2">Main Content Area</h2>
-        <p>Content fills the remaining space.</p>
+      <main className="p-6 flex flex-col lg:flex-row gap-6">
+        <div className="flex-1 border-r border-gray-200">
+          <h1 className="text-2xl font-bold mb-4">Primary Content</h1>
+          <p>This is your main work area. It expands to fill most of the screen width.</p>
+        </div>
+
+        <div className="w-full lg:w-80">
+          <h2 className="text-xl font-semibold mb-4">Secondary Column</h2>
+          <p>This sidebar houses secondary links, widgets, metadata, or actions.</p>
+        </div>
       </main>
 
       <footer className="md:col-span-2 bg-gray-900 text-gray-400 p-4 text-center text-xs">
