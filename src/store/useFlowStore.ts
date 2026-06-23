@@ -13,6 +13,6 @@ interface FlowActions {
 export const useFlowStore = create<FlowState & FlowActions>(
   (set) => ({
     ...initialState,
-    setPlayers: (n) => set((state) => ({nPlayers: n})),
+    setPlayers: (n) => set(() => ({nPlayers: n})),
   })
 )
