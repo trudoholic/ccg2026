@@ -4,11 +4,16 @@ import {Button} from "./Button"
 function MainControls() {
   const nPlayers = useFlowStore(s => s.nPlayers)
   const setPlayers = useFlowStore(s => s.setPlayers)
+  const nextHandIdx = useFlowStore(s => s.nextHandIdx)
 
   return (
     <div className="flex flex-col gap-1">
       {nPlayers? (
-        <Button onClick={() => setPlayers(0)}>New Game</Button>
+        <>
+          <Button onClick={() => setPlayers(0)}>New Game</Button>
+          <div className="h-1" />
+          <Button onClick={nextHandIdx} variant={"red"}>Next</Button>
+        </>
       ): (
         <>
           <Button onClick={() => setPlayers(2)}># 2</Button>
