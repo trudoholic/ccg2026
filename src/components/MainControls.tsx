@@ -5,6 +5,7 @@ function MainControls() {
   const nPlayers = useFlowStore(s => s.nPlayers)
   const setPlayers = useFlowStore(s => s.setPlayers)
   const nextHandIdx = useFlowStore(s => s.nextHandIdx)
+  const nextTurnIdx = useFlowStore(s => s.nextTurnIdx)
 
   return (
     <div className="flex flex-col gap-1">
@@ -12,7 +13,8 @@ function MainControls() {
         <>
           <Button onClick={() => setPlayers(0)}>New Game</Button>
           <div className="h-1" />
-          <Button onClick={nextHandIdx} variant={"red"}>Next</Button>
+          <Button onClick={nextHandIdx} variant={"red"}>Next Hand</Button>
+          <Button onClick={nextTurnIdx} variant={"red"}>Next Turn</Button>
         </>
       ): (
         <>

@@ -8,11 +8,14 @@ type PlayerViewProps = {
 
 function PlayerView({idx}: PlayerViewProps) {
   const handIdx = useFlowStore(s => s.handIdx)
+  const turnIdx = useFlowStore(s => s.turnIdx)
 
   return (
-    <div className={`w-30 p-1 ${idx === handIdx? 'bg-green-100': 'bg-green-700'} rounded-lg`}>
+    <div className={`w-30 p-1 ${idx === handIdx? 'bg-green-500': 'bg-green-700'} rounded-lg`}>
       <div className="p-1 bg-green-700 rounded-md">
-        <p className="text-center text-green-100">{names[idx]}</p>
+        <p className={`font-bold text-lg text-center ${idx === turnIdx? 'text-amber-50': 'text-green-500'}`}>
+          {names[idx]}
+        </p>
       </div>
     </div>
   )
