@@ -10,7 +10,7 @@ function PlayerView({idx}: PlayerViewProps) {
   const handIdx = useFlowStore(s => s.handIdx)
 
   return (
-    <div className={`w-30 p-1 bg-green-${idx === handIdx? 100: 700} rounded-lg`}>
+    <div className={`w-30 p-1 ${idx === handIdx? 'bg-green-100': 'bg-green-700'} rounded-lg`}>
       <div className="p-1 bg-green-700 rounded-md">
         <p className="text-center text-green-100">{names[idx]}</p>
       </div>

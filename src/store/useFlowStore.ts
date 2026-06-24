@@ -1,5 +1,16 @@
 import { create } from 'zustand'
 
+function getNextIdx(idx:number, num:number, reverse:boolean):number {
+  if (reverse) {
+    const nextIdx = idx - 1
+    return (nextIdx < 0? num - 1: nextIdx)
+  }
+  else {
+    const nextIdx = idx + 1
+    return (nextIdx === num? 0: nextIdx)
+  }
+}
+
 const initialState = {
   nPlayers: 0,
   handIdx: 0,
@@ -22,9 +33,6 @@ export const useFlowStore = create<FlowState & FlowActions>(
       handIdx: Math.floor(Math.random() * n)
     })),
 
-    nextHandIdx: () => set((state) => {
-      const nextIdx = state.handIdx + 1
-      return {handIdx: (nextIdx === state.nPlayers? 0: nextIdx)}
-    }),
+    nextHandIdx: () => set((state) => ({handIdx: getNextIdx(state.handIdx, state.nPlayers, false)})),
   })
 )
