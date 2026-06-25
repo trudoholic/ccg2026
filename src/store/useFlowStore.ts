@@ -21,6 +21,10 @@ type FlowState = typeof initialState
 
 interface FlowActions {
   setPlayers: (n: number) => void
+
+  setHandIdx: (n: number) => void
+  setTurnIdx: (n: number) => void
+
   nextHandIdx: () => void
   nextTurnIdx: () => void
 }
@@ -29,10 +33,9 @@ export const useFlowStore = create<FlowState & FlowActions>(
   (set) => ({
     ...initialState,
 
-    setPlayers: (n) => set(() => ({
-      nPlayers: n,
-      handIdx: Math.floor(Math.random() * n)
-    })),
+    setPlayers: (n) => set(() => ({nPlayers: n})),
+    setHandIdx: (n) => set(() => ({handIdx: n})),
+    setTurnIdx: (n) => set(() => ({turnIdx: n})),
 
     nextHandIdx: () => set((state) => ({handIdx: getNextIdx(state.handIdx, state.nPlayers, false)})),
     nextTurnIdx: () => set((state) => ({turnIdx: getNextIdx(state.turnIdx, state.nPlayers, false)})),

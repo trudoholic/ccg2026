@@ -4,8 +4,19 @@ import {Button} from "./Button"
 function MainControls() {
   const nPlayers = useFlowStore(s => s.nPlayers)
   const setPlayers = useFlowStore(s => s.setPlayers)
+
+  const setHandIdx = useFlowStore(s => s.setHandIdx)
+  const setTurnIdx = useFlowStore(s => s.setTurnIdx)
+
   const nextHandIdx = useFlowStore(s => s.nextHandIdx)
   const nextTurnIdx = useFlowStore(s => s.nextTurnIdx)
+
+  function startNewGame(n:number) {
+    setPlayers(n)
+    const elderHandIdx = Math.floor(Math.random() * n)
+    setHandIdx(elderHandIdx)
+    setTurnIdx(elderHandIdx)
+  }
 
   return (
     <div className="flex flex-col gap-1">
@@ -18,9 +29,9 @@ function MainControls() {
         </>
       ): (
         <>
-          <Button onClick={() => setPlayers(2)}># 2</Button>
-          <Button onClick={() => setPlayers(3)}># 3</Button>
-          <Button onClick={() => setPlayers(4)}># 4</Button>
+          <Button onClick={() => startNewGame(2)}># 2</Button>
+          <Button onClick={() => startNewGame(3)}># 3</Button>
+          <Button onClick={() => startNewGame(4)}># 4</Button>
         </>
       )}
     </div>
