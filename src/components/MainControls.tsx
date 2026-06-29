@@ -37,14 +37,31 @@ function MainControls() {
     nextTurnIdx()
   }
 
+  function addCard() {
+    const newZones = players[turnIdx].zones.map((z, i) => (0 === i? {
+      ...z, cards: [...z.cards, rnd(6)]
+    }: z))
+    updatePlayer(turnIdx, {zones: newZones})
+  }
+
+  function remCard() {
+    const newZones = players[turnIdx].zones.map((z, i) => (0 === i? {
+      ...z, cards: z.cards.filter((_, i) => 0 !== i)
+    }: z))
+    updatePlayer(turnIdx, {zones: newZones})
+  }
+
   return (
     <div className="flex flex-col gap-1">
       {nPlayers? (
         <>
           <Button onClick={endGame}>New Game</Button>
           <div className="h-1" />
-          <Button onClick={nextHandIdx} variant={"red"}>Next Hand</Button>
-          <Button onClick={nextTurn} variant={"red"}>Next Turn</Button>
+          <Button onClick={nextHandIdx} variant={"green"}>Next Hand</Button>
+          <Button onClick={nextTurn} variant={"green"}>Next Turn</Button>
+          <div className="h-1" />
+          <Button onClick={addCard} variant={"red"}>Add</Button>
+          <Button onClick={remCard} variant={"red"}>Rem</Button>
         </>
       ): (
         <>
