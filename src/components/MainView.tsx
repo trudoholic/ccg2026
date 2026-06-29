@@ -43,8 +43,10 @@ function MainView() {
         </div>
       ))}
 
-      <h1 className="text-green-500">{`Draw Pile: ${drawPile.join(' ')}`}</h1>
-      <h1 className="text-amber-500">{`Drop Pile: ${dropPile.join(' ')}`}</h1>
+      {players.length? <>
+        <h1 className="text-green-500">{`Draw Pile: ${drawPile.join(' ')}`}</h1>
+        <h1 className="text-amber-500">{`Drop Pile: ${dropPile.join(' ')}`}</h1>
+      </>: null}
 
     </div>
   )

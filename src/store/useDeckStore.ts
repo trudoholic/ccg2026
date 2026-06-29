@@ -27,6 +27,8 @@ const initialState: DeckState = {
 
 interface DeckActions {
   initDeck: () => void
+  updateDrawPile: (list: number[]) => void
+  updateDropPile: (list: number[]) => void
 }
 
 export const useDeckStore = create<DeckState & DeckActions>(
@@ -34,5 +36,7 @@ export const useDeckStore = create<DeckState & DeckActions>(
     ...initialState,
 
     initDeck: () => set((state) => ({drawPile: shuffle(_deck), dropPile: []})),
+    updateDrawPile: (list) => set(() => ({drawPile: list})),
+    updateDropPile: (list) => set(() => ({dropPile: list})),
   })
 )

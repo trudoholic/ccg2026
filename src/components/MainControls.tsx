@@ -17,7 +17,11 @@ function MainControls() {
   const createPlayers = usePlayersStore(s => s.createPlayers)
   const updatePlayer = usePlayersStore(s => s.updatePlayer)
 
+  const drawPile = useDeckStore(s => s.drawPile)
+  const dropPile = useDeckStore(s => s.dropPile)
   const initDeck = useDeckStore(s => s.initDeck)
+  const updateDrawPile = useDeckStore(s => s.updateDrawPile)
+  const updateDropPile = useDeckStore(s => s.updateDropPile)
 
   function startNewGame(n:number) {
     initDeck()
@@ -41,18 +45,31 @@ function MainControls() {
     nextTurnIdx()
   }
 
-  function addCard() {
-    const newZones = players[turnIdx].zones.map((z, i) => (0 === i? {
-      ...z, cards: [...z.cards, rnd(6)]
-    }: z))
-    updatePlayer(turnIdx, {zones: newZones})
+  function drawCard() {
+    if (drawPile.length) {
+      const pile = [...drawPile]
+      const card = pile.pop()
+      updateDrawPile(pile)
+      const newZones = players[turnIdx].zones.map((z, i) => (0 === i? {
+        ...z, cards: [...z.cards, card]
+      }: z))
+      updatePlayer(turnIdx, {zones: newZones})
+    }
   }
 
-  function remCard() {
-    const newZones = players[turnIdx].zones.map((z, i) => (0 === i? {
-      ...z, cards: z.cards.filter((_, i) => 0 !== i)
-    }: z))
-    updatePlayer(turnIdx, {zones: newZones})
+  function dropCard() {
+    const zoneIdx = 0
+    const zones = players[turnIdx].zones
+    const cards = zones[zoneIdx].cards
+    if (cards.length) {
+      const dropIdx = 0
+      const pile = [...dropPile, cards[dropIdx]]
+      updateDropPile(pile)
+      const newZones = zones.map((z, zi) => (zoneIdx === zi? {
+        ...z, cards: z.cards.filter((_, ci) => dropIdx !== ci)
+      }: z))
+      updatePlayer(turnIdx, {zones: newZones})
+    }
   }
 
   return (
@@ -64,8 +81,8 @@ function MainControls() {
           <Button onClick={nextHandIdx} variant={"green"}>Next Hand</Button>
           <Button onClick={nextTurn} variant={"green"}>Next Turn</Button>
           <div className="h-1" />
-          <Button onClick={addCard} variant={"red"}>Add</Button>
-          <Button onClick={remCard} variant={"red"}>Rem</Button>
+          <Button onClick={drawCard} variant={"red"} disabled={!drawPile.length}>Draw</Button>
+          <Button onClick={dropCard} variant={"red"} disabled={!players[turnIdx].zones[0].cards.length}>Drop</Button>
         </>
       ): (
         <>
