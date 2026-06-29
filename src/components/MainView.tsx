@@ -13,6 +13,7 @@ function MainView() {
                 key={p.id}
                 idx={i}
                 name={p.name}
+                score={p.score}
               />
             ))}
           </div>

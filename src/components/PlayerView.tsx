@@ -3,9 +3,10 @@ import {useFlowStore} from "../store/useFlowStore"
 type PlayerViewProps = {
   idx: number
   name: string
+  score: number
 }
 
-function PlayerView({idx, name}: PlayerViewProps) {
+function PlayerView({idx, name, score}: PlayerViewProps) {
   const handIdx = useFlowStore(s => s.handIdx)
   const turnIdx = useFlowStore(s => s.turnIdx)
 
@@ -13,7 +14,7 @@ function PlayerView({idx, name}: PlayerViewProps) {
     <div className={`w-30 p-1 ${idx === handIdx? 'bg-green-500': 'bg-green-700'} rounded-lg`}>
       <div className="p-1 bg-green-700 rounded-md">
         <p className={`font-bold text-lg text-center ${idx === turnIdx? 'text-amber-50': 'text-green-500'}`}>
-          {`${idx}: ${name}`}
+          {`${name}: ${score}`}
         </p>
       </div>
     </div>
