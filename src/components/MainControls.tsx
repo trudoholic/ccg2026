@@ -48,7 +48,7 @@ function MainControls() {
   function drawCard() {
     if (drawPile.length) {
       const pile = [...drawPile]
-      const card = pile.pop()
+      const card = pile.pop() ?? 0
       updateDrawPile(pile)
       const newZones = players[turnIdx].zones.map((z, i) => (0 === i? {
         ...z, cards: [...z.cards, card]

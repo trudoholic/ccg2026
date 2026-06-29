@@ -35,7 +35,7 @@ export const useDeckStore = create<DeckState & DeckActions>(
   (set) => ({
     ...initialState,
 
-    initDeck: () => set((state) => ({drawPile: shuffle(_deck), dropPile: []})),
+    initDeck: () => set(() => ({drawPile: shuffle(_deck), dropPile: []})),
     updateDrawPile: (list) => set(() => ({drawPile: list})),
     updateDropPile: (list) => set(() => ({dropPile: list})),
   })
