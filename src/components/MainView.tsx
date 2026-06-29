@@ -1,8 +1,11 @@
 import {usePlayersStore, zoneNames} from "../store/usePlayersStore"
+import {useDeckStore} from "../store/useDeckStore"
 import PlayerView from "./PlayerView"
 
 function MainView() {
   const players = usePlayersStore(s => s.players)
+  const drawPile = useDeckStore(s => s.drawPile)
+  const dropPile = useDeckStore(s => s.dropPile)
 
   return (
     <div className="flex flex-col gap-2">
@@ -39,6 +42,9 @@ function MainView() {
           ): null}
         </div>
       ))}
+
+      <h1 className="text-green-500">{`Draw Pile: ${drawPile.join(' ')}`}</h1>
+      <h1 className="text-amber-500">{`Drop Pile: ${dropPile.join(' ')}`}</h1>
 
     </div>
   )

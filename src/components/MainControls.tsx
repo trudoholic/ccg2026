@@ -1,5 +1,6 @@
 import {useFlowStore} from "../store/useFlowStore"
 import {usePlayersStore} from "../store/usePlayersStore"
+import {useDeckStore} from "../store/useDeckStore"
 import {Button} from "./Button"
 
 function MainControls() {
@@ -16,7 +17,10 @@ function MainControls() {
   const createPlayers = usePlayersStore(s => s.createPlayers)
   const updatePlayer = usePlayersStore(s => s.updatePlayer)
 
+  const initDeck = useDeckStore(s => s.initDeck)
+
   function startNewGame(n:number) {
+    initDeck()
     createPlayers(n)
     setPlayers(n)
     const elderHandIdx = Math.floor(Math.random() * n)
