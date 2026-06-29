@@ -1,19 +1,18 @@
-import {useFlowStore} from "../store/useFlowStore"
+import {usePlayersStore} from "../store/usePlayersStore"
 import PlayerView from "./PlayerView"
 
-const range = (n: number) => [...Array(n).keys()]
-
 function MainView() {
-  const nPlayers = useFlowStore(s => s.nPlayers)
+  const players = usePlayersStore(s => s.players)
 
   return (
     <>
-      {nPlayers? (
+      {players.length? (
           <div className="flex flex-row gap-2">
-            {range(nPlayers).map((i) => (
+            {players.map((p, i) => (
               <PlayerView
-                key={i}
+                key={p.id}
                 idx={i}
+                name={p.name}
               />
             ))}
           </div>

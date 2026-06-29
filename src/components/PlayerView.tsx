@@ -1,12 +1,11 @@
 import {useFlowStore} from "../store/useFlowStore"
 
-const names = ['Anna', 'Beth', 'Ciri', 'Dana']
-
 type PlayerViewProps = {
   idx: number
+  name: string
 }
 
-function PlayerView({idx}: PlayerViewProps) {
+function PlayerView({idx, name}: PlayerViewProps) {
   const handIdx = useFlowStore(s => s.handIdx)
   const turnIdx = useFlowStore(s => s.turnIdx)
 
@@ -14,7 +13,7 @@ function PlayerView({idx}: PlayerViewProps) {
     <div className={`w-30 p-1 ${idx === handIdx? 'bg-green-500': 'bg-green-700'} rounded-lg`}>
       <div className="p-1 bg-green-700 rounded-md">
         <p className={`font-bold text-lg text-center ${idx === turnIdx? 'text-amber-50': 'text-green-500'}`}>
-          {names[idx]}
+          {`${idx}: ${name}`}
         </p>
       </div>
     </div>
