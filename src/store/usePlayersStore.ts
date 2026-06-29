@@ -1,10 +1,20 @@
 import { create } from 'zustand'
 
+type TZone = {
+  id: number
+  name: string
+  cards: number[]
+}
+
+export const zoneNames = ['Hand', 'Keep']
+const zones: TZone[] = zoneNames.map((name, idx) => ({id: idx, name, cards: []}))
+
 const _player = {
   id: 0,
   name: "",
   pass: false,
   score: 0,
+  zones,
 }
 
 type TPlayer = typeof _player

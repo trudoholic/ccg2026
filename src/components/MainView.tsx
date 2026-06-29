@@ -1,7 +1,5 @@
-import {usePlayersStore} from "../store/usePlayersStore"
+import {usePlayersStore, zoneNames} from "../store/usePlayersStore"
 import PlayerView from "./PlayerView"
-
-const zones = ['Hand', 'Keep']
 
 function MainView() {
   const players = usePlayersStore(s => s.players)
@@ -25,17 +23,19 @@ function MainView() {
         <h1>Start New Game</h1>
       )}
 
-      {zones.map((zone) => (
+      {zoneNames.map((zone, zoneId) => (
         <div key={zone}>
-          <p className="mb-1 italic">{`${zone}`}</p>
           {players.length? (
-            <div className="flex flex-row gap-2">
-              {players.map((p, i) => (
-                <div key={p.id} className="flex-1 p-4 border border-zinc-500">
-                  {`${zone} ${i}`}
-                </div>
-              ))}
-            </div>
+            <>
+              <p className="mb-1 italic">{`${zone}`}</p>
+              <div className="flex flex-row gap-2">
+                {players.map((p, i) => (
+                  <div key={p.id} className="flex-1 p-4 border border-zinc-500">
+                    {`${zone} ${i} [${p.zones[zoneId].cards.join(' ')}]`}
+                  </div>
+                ))}
+              </div>
+            </>
           ): null}
         </div>
       ))}
