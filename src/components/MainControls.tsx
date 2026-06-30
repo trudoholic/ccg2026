@@ -23,6 +23,7 @@ function MainControls() {
   const reshuffle = useDeckStore(s => s.reshuffle)
   const updateDrawPile = useDeckStore(s => s.updateDrawPile)
   const updateDropPile = useDeckStore(s => s.updateDropPile)
+  const idActive = useDeckStore(s => s.idActive)
 
   function startNewGame(n:number) {
     initDeck()
@@ -58,18 +59,38 @@ function MainControls() {
     }
   }
 
+  // function dropCard__() {
+  //   const zoneIdx = 0
+  //   const zones = players[turnIdx].zones
+  //   const cards = zones[zoneIdx].cards
+  //   if (cards.length) {
+  //     const dropIdx = 0
+  //     const pile = [...dropPile, cards[dropIdx]]
+  //     updateDropPile(pile)
+  //     const newZones = zones.map((z, zi) => (zoneIdx === zi? {
+  //       ...z, cards: z.cards.filter((_, ci) => dropIdx !== ci)
+  //     }: z))
+  //     updatePlayer(turnIdx, {zones: newZones})
+  //   }
+  // }
+
+  function isValidDrop(id:number) {
+    const zoneHand = 0
+    const cards = players[turnIdx].zones[zoneHand].cards
+    return cards.includes(id)
+  }
+
   function dropCard() {
-    const zoneIdx = 0
-    const zones = players[turnIdx].zones
-    const cards = zones[zoneIdx].cards
-    if (cards.length) {
-      const dropIdx = 0
-      const pile = [...dropPile, cards[dropIdx]]
-      updateDropPile(pile)
-      const newZones = zones.map((z, zi) => (zoneIdx === zi? {
-        ...z, cards: z.cards.filter((_, ci) => dropIdx !== ci)
+    if (isValidDrop(idActive)) {
+      const zoneHand = 0
+      const zones = players[turnIdx].zones
+      const newZones = zones.map((z, zi) => (zoneHand === zi? {
+        ...z, cards: z.cards.filter(c => idActive !== c)
       }: z))
       updatePlayer(turnIdx, {zones: newZones})
+
+      const pile = [...dropPile, idActive]
+      updateDropPile(pile)
     }
   }
 
@@ -83,7 +104,8 @@ function MainControls() {
           <Button onClick={nextTurn} variant={"green"}>Next Turn</Button>
           <div className="h-1" />
           <Button onClick={drawCard} variant={"red"} disabled={!drawPile.length}>Draw</Button>
-          <Button onClick={dropCard} variant={"red"} disabled={!players[turnIdx].zones[0].cards.length}>Drop</Button>
+          {/*<Button onClick={dropCard} variant={"red"} disabled={!players[turnIdx].zones[0].cards.length}>Drop</Button>*/}
+          <Button onClick={dropCard} variant={"red"} disabled={!isValidDrop(idActive)}>Drop</Button>
           <Button onClick={reshuffle} variant={"red"} disabled={drawPile.length > 0 || !dropPile.length}>Reshuffle</Button>
         </>
       ): (

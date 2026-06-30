@@ -1,6 +1,6 @@
 import MainControls from "./MainControls"
 import MainView from "./MainView"
-import AsideView from "./AsideView";
+import AsideView from "./AsideView"
 
 function Layout() {
   return (
