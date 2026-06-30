@@ -35,6 +35,8 @@ interface DeckActions {
   reshuffle: () => void
   updateDrawPile: (list: number[]) => void
   updateDropPile: (list: number[]) => void
+  setActive: (id: number) => void
+  setTarget: (id: number) => void
 }
 
 export const useDeckStore = create<DeckState & DeckActions>(
@@ -45,5 +47,7 @@ export const useDeckStore = create<DeckState & DeckActions>(
     reshuffle: () => set((state) => ({drawPile: shuffle(state.dropPile), dropPile: []})),
     updateDrawPile: (list) => set(() => ({drawPile: list})),
     updateDropPile: (list) => set(() => ({dropPile: list})),
+    setActive: (id) => set(() => ({idActive: id})),
+    setTarget: (id) => set(() => ({idTarget: id})),
   })
 )
