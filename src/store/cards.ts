@@ -53,3 +53,4 @@ const rawList: Partial<TCard>[] = [
 
 const cardList = rawList.map((it, i) => ({...it, id: i + 1}))
 export const cardIds = cardList.map(it => it.id)
+export const getCard = (id: number) => cardList[id - 1] ?? {id: 0}

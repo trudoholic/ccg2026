@@ -1,6 +1,7 @@
 import {usePlayersStore, zoneNames} from "../store/usePlayersStore"
 import {useDeckStore} from "../store/useDeckStore"
 import PlayerView from "./PlayerView"
+import CardView from "./CardView";
 
 function MainView() {
   const players = usePlayersStore(s => s.players)
@@ -45,7 +46,19 @@ function MainView() {
 
       {players.length? <>
         <h1 className="text-green-500">{`Draw Pile: ${drawPile.join(' ')}`}</h1>
+        <div className="flex flex-row flex-wrap gap-1">
+          {drawPile.map(id => (
+            <CardView key={id} id={id}/>
+          ))}
+        </div>
+
         <h1 className="text-amber-500">{`Drop Pile: ${dropPile.join(' ')}`}</h1>
+        <div className="flex flex-row flex-wrap gap-1">
+          {dropPile.map(id => (
+            <CardView key={id} id={id}/>
+          ))}
+        </div>
+
       </>: null}
 
     </div>
