@@ -1,6 +1,7 @@
 import { create } from 'zustand'
+import {cardIds} from "./cards"
 
-const _deck: number[] = [...Array(10).keys()]
+// const _deck: number[] = [...Array(10).keys()]
 
 const shuffle = (list: number[], debug = false): number[] => {
   const src = [...list]
@@ -36,7 +37,7 @@ export const useDeckStore = create<DeckState & DeckActions>(
   (set) => ({
     ...initialState,
 
-    initDeck: () => set(() => ({drawPile: shuffle(_deck), dropPile: []})),
+    initDeck: () => set(() => ({drawPile: shuffle(cardIds), dropPile: []})),
     reshuffle: () => set((state) => ({drawPile: shuffle(state.dropPile), dropPile: []})),
     updateDrawPile: (list) => set(() => ({drawPile: list})),
     updateDropPile: (list) => set(() => ({dropPile: list})),

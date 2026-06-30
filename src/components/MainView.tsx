@@ -32,7 +32,7 @@ function MainView() {
             <>
               <p className="mb-1 italic">{`${zone}`}</p>
               <div className="flex flex-row gap-2">
-                {players.map((p, i) => (
+                {players.map(p => (
                   <div key={p.id} className="flex-1 p-4 border border-zinc-500">
                     {`${p.zones[zoneId].cards.join(' ')}`}
                   </div>
