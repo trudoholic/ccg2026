@@ -20,6 +20,7 @@ function MainControls() {
   const drawPile = useDeckStore(s => s.drawPile)
   const dropPile = useDeckStore(s => s.dropPile)
   const initDeck = useDeckStore(s => s.initDeck)
+  const reshuffle = useDeckStore(s => s.reshuffle)
   const updateDrawPile = useDeckStore(s => s.updateDrawPile)
   const updateDropPile = useDeckStore(s => s.updateDropPile)
 
@@ -83,6 +84,7 @@ function MainControls() {
           <div className="h-1" />
           <Button onClick={drawCard} variant={"red"} disabled={!drawPile.length}>Draw</Button>
           <Button onClick={dropCard} variant={"red"} disabled={!players[turnIdx].zones[0].cards.length}>Drop</Button>
+          <Button onClick={reshuffle} variant={"red"} disabled={drawPile.length > 0 || !dropPile.length}>Reshuffle</Button>
         </>
       ): (
         <>

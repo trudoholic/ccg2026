@@ -34,7 +34,7 @@ function MainView() {
               <div className="flex flex-row gap-2">
                 {players.map((p, i) => (
                   <div key={p.id} className="flex-1 p-4 border border-zinc-500">
-                    {`${zone} ${i} [${p.zones[zoneId].cards.join(' ')}]`}
+                    {`${p.zones[zoneId].cards.join(' ')}`}
                   </div>
                 ))}
               </div>
