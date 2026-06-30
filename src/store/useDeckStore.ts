@@ -19,11 +19,15 @@ const shuffle = (list: number[], debug = false): number[] => {
 type DeckState = {
   drawPile: number[]
   dropPile: number[]
+  idActive: number
+  idTarget: number
 }
 
 const initialState: DeckState = {
   drawPile: [],
   dropPile: [],
+  idActive: 0,
+  idTarget: 0,
 }
 
 interface DeckActions {
