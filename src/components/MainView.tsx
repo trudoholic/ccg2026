@@ -1,7 +1,7 @@
 import {usePlayersStore, zoneNames} from "../store/usePlayersStore"
 import {useDeckStore} from "../store/useDeckStore"
 import PlayerView from "./PlayerView"
-import CardView from "./CardView";
+import CardView from "./CardView"
 
 function MainView() {
   const players = usePlayersStore(s => s.players)

@@ -1,5 +1,6 @@
 import MainControls from "./MainControls"
 import MainView from "./MainView"
+import AsideView from "./AsideView";
 
 function Layout() {
   return (
@@ -19,7 +20,7 @@ function Layout() {
           </div>
 
           <aside className="w-full md:w-72 order-3 md:order-3 border-l border-zinc-500 p-4">
-            Secondary Column
+            <AsideView/>
           </aside>
         </div>
       </main>
