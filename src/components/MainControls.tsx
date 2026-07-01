@@ -6,10 +6,10 @@ import {Button} from "./Button"
 function MainControls() {
   const nPlayers = useFlowStore(s => s.nPlayers)
   const turnIdx = useFlowStore(s => s.turnIdx)
+  const turnCnt = useFlowStore(s => s.turnCnt)
 
   const setPlayers = useFlowStore(s => s.setPlayers)
   const setHandIdx = useFlowStore(s => s.setHandIdx)
-  const setTurnIdx = useFlowStore(s => s.setTurnIdx)
   const nextHandIdx = useFlowStore(s => s.nextHandIdx)
   const nextTurnIdx = useFlowStore(s => s.nextTurnIdx)
 
@@ -29,9 +29,7 @@ function MainControls() {
     initDeck()
     createPlayers(n)
     setPlayers(n)
-    const elderHandIdx = Math.floor(Math.random() * n)
-    setHandIdx(elderHandIdx)
-    setTurnIdx(elderHandIdx)
+    setHandIdx(Math.floor(Math.random() * n))
   }
 
   function endGame() {
@@ -85,14 +83,19 @@ function MainControls() {
         <>
           <Button onClick={endGame}>New Game</Button>
           <div className="h-1" />
-          <Button onClick={nextHandIdx} variant={"green"}>Next Hand</Button>
-          <Button onClick={nextTurn} variant={"green"}>Next Turn</Button>
-          <div className="h-1" />
-          <Button onClick={drawCard} variant={"red"} disabled={!drawPile.length}>Draw</Button>
-          <Button onClick={dropCard} variant={"red"} disabled={!isValidDrop(idActive)}>Drop</Button>
-          <Button onClick={reshuffle} variant={"red"} disabled={drawPile.length > 0 || !dropPile.length}>
-            Reshuffle
-          </Button>
+          {turnCnt === nPlayers? (
+            <Button onClick={nextHandIdx} variant={"green"}>Next Hand</Button>
+          ): (
+            <>
+              <Button onClick={nextTurn} variant={"green"}>Next Turn</Button>
+              <div className="h-1" />
+              <Button onClick={drawCard} variant={"red"} disabled={!drawPile.length}>Draw</Button>
+              <Button onClick={dropCard} variant={"red"} disabled={!isValidDrop(idActive)}>Drop</Button>
+              <Button onClick={reshuffle} variant={"red"} disabled={drawPile.length > 0 || !dropPile.length}>
+                Reshuffle
+              </Button>
+            </>
+          )}
         </>
       ): (
         <>

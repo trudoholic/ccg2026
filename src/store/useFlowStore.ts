@@ -15,6 +15,7 @@ const initialState = {
   nPlayers: 0,
   handIdx: 0,
   turnIdx: 0,
+  turnCnt: 0,
 }
 
 type FlowState = typeof initialState
@@ -34,10 +35,17 @@ export const useFlowStore = create<FlowState & FlowActions>(
     ...initialState,
 
     setPlayers: (n) => set(() => ({nPlayers: n})),
-    setHandIdx: (n) => set(() => ({handIdx: n})),
+    setHandIdx: (n) => set(() => ({handIdx: n, turnIdx: n, turnCnt: 0})),
     setTurnIdx: (n) => set(() => ({turnIdx: n})),
 
-    nextHandIdx: () => set((state) => ({handIdx: getNextIdx(state.handIdx, state.nPlayers, false)})),
-    nextTurnIdx: () => set((state) => ({turnIdx: getNextIdx(state.turnIdx, state.nPlayers, false)})),
+    nextHandIdx: () => set((state) => ({
+      handIdx: getNextIdx(state.handIdx, state.nPlayers, false),
+      turnIdx: getNextIdx(state.handIdx, state.nPlayers, false),
+      turnCnt: 0,
+    })),
+    nextTurnIdx: () => set((state) => ({
+      turnIdx: getNextIdx(state.turnIdx, state.nPlayers, false),
+      turnCnt: state.turnCnt + 1,
+    })),
   })
 )

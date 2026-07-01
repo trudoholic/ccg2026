@@ -1,3 +1,4 @@
+import HeaderView from "./HeaderView"
 import MainControls from "./MainControls"
 import MainView from "./MainView"
 import AsideView from "./AsideView"
@@ -6,7 +7,7 @@ function Layout() {
   return (
     <div className="h-screen flex flex-col overflow-hidden">
       <header className="border-b border-zinc-500 p-4 text-center">
-        <div className="container mx-auto">App Header</div>
+        <HeaderView/>
       </header>
 
       <main className="flex-1 overflow-y-auto">
