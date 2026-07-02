@@ -1,4 +1,4 @@
-import {useFlowStore} from "../store/useFlowStore"
+import {useFlowStore, phaseNames} from "../store/useFlowStore"
 import {usePlayersStore} from "../store/usePlayersStore"
 import {useDeckStore} from "../store/useDeckStore"
 import {Button} from "./Button"
@@ -6,6 +6,7 @@ import {Button} from "./Button"
 function MainControls() {
   const nPlayers = useFlowStore(s => s.nPlayers)
   const turnIdx = useFlowStore(s => s.turnIdx)
+  const phaseIdx = useFlowStore(s => s.phaseIdx)
   const turnCnt = useFlowStore(s => s.turnCnt)
 
   const setPlayers = useFlowStore(s => s.setPlayers)
@@ -84,20 +85,23 @@ function MainControls() {
         <>
           <Button onClick={endGame}>New Game</Button>
           <div className="h-1" />
-          {turnCnt === nPlayers? (
-            <Button onClick={nextHandIdx} variant={"green"}>Next Hand</Button>
-          ): (
-            <>
+          {
+            turnCnt === nPlayers? (
+              <Button onClick={nextHandIdx} variant={"green"}>Next Hand</Button>
+            ): phaseIdx === phaseNames.length? (
               <Button onClick={nextTurn} variant={"green"}>Next Turn</Button>
-              <Button onClick={nextPhaseIdx} variant={"green"}>Next Phase</Button>
-              <div className="h-1" />
-              <Button onClick={drawCard} variant={"red"} disabled={!drawPile.length}>Draw</Button>
-              <Button onClick={dropCard} variant={"red"} disabled={!isValidDrop(idActive)}>Drop</Button>
-              <Button onClick={reshuffle} variant={"red"} disabled={drawPile.length > 0 || !dropPile.length}>
-                Reshuffle
-              </Button>
-            </>
-          )}
+            ): (
+              <>
+                <Button onClick={nextPhaseIdx} variant={"green"}>Next Phase</Button>
+                <div className="h-1" />
+                <Button onClick={drawCard} variant={"red"} disabled={!drawPile.length}>Draw</Button>
+                <Button onClick={dropCard} variant={"red"} disabled={!isValidDrop(idActive)}>Drop</Button>
+                <Button onClick={reshuffle} variant={"red"} disabled={drawPile.length > 0 || !dropPile.length}>
+                  Reshuffle
+                </Button>
+              </>
+            )
+          }
         </>
       ): (
         <>

@@ -1,5 +1,8 @@
 import { create } from 'zustand'
 
+export const phaseNames = ['Draw', 'Play', 'Drop']
+
+
 function getNextIdx(idx:number, num:number, reverse:boolean):number {
   if (reverse) {
     const nextIdx = idx - 1
