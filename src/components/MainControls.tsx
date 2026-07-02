@@ -12,6 +12,7 @@ function MainControls() {
   const setHandIdx = useFlowStore(s => s.setHandIdx)
   const nextHandIdx = useFlowStore(s => s.nextHandIdx)
   const nextTurnIdx = useFlowStore(s => s.nextTurnIdx)
+  const nextPhaseIdx = useFlowStore(s => s.nextPhaseIdx)
 
   const players = usePlayersStore(s => s.players)
   const createPlayers = usePlayersStore(s => s.createPlayers)
@@ -88,6 +89,7 @@ function MainControls() {
           ): (
             <>
               <Button onClick={nextTurn} variant={"green"}>Next Turn</Button>
+              <Button onClick={nextPhaseIdx} variant={"green"}>Next Phase</Button>
               <div className="h-1" />
               <Button onClick={drawCard} variant={"red"} disabled={!drawPile.length}>Draw</Button>
               <Button onClick={dropCard} variant={"red"} disabled={!isValidDrop(idActive)}>Drop</Button>

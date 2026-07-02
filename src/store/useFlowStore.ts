@@ -14,6 +14,7 @@ function getNextIdx(idx:number, num:number, reverse:boolean):number {
 const initialState = {
   nPlayers: 0,
   handIdx: 0,
+  phaseIdx: 0,
   turnIdx: 0,
   turnCnt: 0,
 }
@@ -28,6 +29,7 @@ interface FlowActions {
 
   nextHandIdx: () => void
   nextTurnIdx: () => void
+  nextPhaseIdx: () => void
 }
 
 export const useFlowStore = create<FlowState & FlowActions>(
@@ -43,9 +45,16 @@ export const useFlowStore = create<FlowState & FlowActions>(
       turnIdx: getNextIdx(state.handIdx, state.nPlayers, false),
       turnCnt: 0,
     })),
+
     nextTurnIdx: () => set((state) => ({
       turnIdx: getNextIdx(state.turnIdx, state.nPlayers, false),
       turnCnt: state.turnCnt + 1,
+      phaseIdx: 0,
     })),
+
+    nextPhaseIdx: () => set((state) => ({
+      phaseIdx: state.phaseIdx + 1,
+    })),
+
   })
 )
