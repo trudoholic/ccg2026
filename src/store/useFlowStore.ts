@@ -20,6 +20,7 @@ const initialState = {
   phaseIdx: 0,
   turnIdx: 0,
   turnCnt: 0,
+  beatCnt: 0,
 }
 
 type FlowState = typeof initialState
@@ -33,6 +34,7 @@ interface FlowActions {
   nextHandIdx: () => void
   nextTurnIdx: () => void
   nextPhaseIdx: () => void
+  nextBeat: () => void
 }
 
 export const useFlowStore = create<FlowState & FlowActions>(
@@ -57,6 +59,10 @@ export const useFlowStore = create<FlowState & FlowActions>(
 
     nextPhaseIdx: () => set((state) => ({
       phaseIdx: state.phaseIdx + 1,
+    })),
+
+    nextBeat: () => set((state) => ({
+      beatCnt: state.beatCnt + 1,
     })),
 
   })
