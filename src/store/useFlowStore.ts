@@ -92,3 +92,8 @@ export const isBeatOn = (): boolean => {
   const state = useFlowStore.getState()
   return state.beatCnt < beatLim
 }
+
+export const isPhaseOn = (): boolean => {
+  const state = useFlowStore.getState()
+  return state.phaseIdx < phaseNames.length
+}

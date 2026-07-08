@@ -64,7 +64,7 @@ function MainControls() {
 
   function isValidDrop(id:number) {
     const zoneHand = 0
-    const cards = players[turnIdx].zones[zoneHand].cards
+    const cards = players[turnIdx]?.zones[zoneHand].cards ?? []
     return cards.includes(id)
   }
 

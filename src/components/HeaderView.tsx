@@ -1,4 +1,8 @@
-import {useFlowStore, phaseNames, isBeatOn} from "../store/useFlowStore"
+import {
+  useFlowStore, phaseNames,
+  isBeatOn, isPhaseOn
+} from "../store/useFlowStore"
+import {playerNames} from "../store/usePlayersStore"
 
 const beatLim = 4
 
@@ -10,12 +14,19 @@ function HeaderView() {
 
   return (
     <div className="flex gap-4 mx-auto justify-center">
-      <p className={`font-bold text-lg select-none`}>{`Turn Idx: ${turnIdx}`}</p>
-      <p className={`font-bold text-lg select-none`}>{`Turn Cnt: ${turnCnt}`}</p>
+      <p className={`font-bold text-lg select-none`}>{`Turn [${turnIdx}] ${playerNames[turnIdx]}`}</p>
+      <p className={`font-bold text-lg select-none`}>{`Cnt: ${turnCnt}`}</p>
 
-      <p className={`font-bold text-lg select-none`}>
-        {isBeatOn()? `[${phaseIdx}] ${phaseNames[phaseIdx]} ${beatCnt} / ${beatLim}`: "Next Phase"}
-      </p>
+
+      {isPhaseOn()? (
+        <p className={`font-bold text-lg select-none`}>
+          {isBeatOn()? `[${phaseIdx}] ${phaseNames[phaseIdx]} ${beatCnt} / ${beatLim}`: "Next Phase"}
+        </p>
+      ): (
+        <p className={`font-bold text-lg select-none`}>Next Turn</p>
+      )}
+
+
     </div>
   )
 }

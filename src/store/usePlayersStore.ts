@@ -19,7 +19,7 @@ const _player = {
 
 type TPlayer = typeof _player
 
-const playerNames = ['Anna', 'Beth', 'Ciri', 'Dana']
+export const playerNames = ['Anna', 'Beth', 'Ciri', 'Dana']
 
 function getPlayers(n: number): TPlayer[] {
   return (n? [...Array(n).keys()].map((i) => ({..._player, id: i + 1, name: playerNames[i]})): [])
