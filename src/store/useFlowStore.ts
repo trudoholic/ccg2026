@@ -97,3 +97,8 @@ export const isPhaseOn = (): boolean => {
   const state = useFlowStore.getState()
   return state.phaseIdx < phaseNames.length
 }
+
+export const isTurnOn = (): boolean => {
+  const state = useFlowStore.getState()
+  return state.turnCnt < state.nPlayers
+}
