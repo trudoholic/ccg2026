@@ -1,4 +1,7 @@
-import {useFlowStore, phaseNames, isBeatOn, isPhaseOn} from "../store/useFlowStore"
+import {
+  useFlowStore, phaseNames,
+  isBeatOn, isPhaseOn, isTurnOn
+} from "../store/useFlowStore"
 import {usePlayersStore} from "../store/usePlayersStore"
 import {useDeckStore} from "../store/useDeckStore"
 import {Button} from "./Button"
@@ -7,7 +10,6 @@ function MainControls() {
   const nPlayers = useFlowStore(s => s.nPlayers)
   const turnIdx = useFlowStore(s => s.turnIdx)
   const phaseIdx = useFlowStore(s => s.phaseIdx)
-  const turnCnt = useFlowStore(s => s.turnCnt)
   const beatCnt = useFlowStore(s => s.beatCnt)
 
   const setPlayers = useFlowStore(s => s.setPlayers)
@@ -16,7 +18,6 @@ function MainControls() {
   const nextTurnIdx = useFlowStore(s => s.nextTurnIdx)
   const nextPhaseIdx = useFlowStore(s => s.nextPhaseIdx)
   const nextBeatCnt = useFlowStore(s => s.nextBeatCnt)
-  // const nextBeat = useFlowStore(s => s.nextBeat)
 
   const players = usePlayersStore(s => s.players)
   const createPlayers = usePlayersStore(s => s.createPlayers)
@@ -88,35 +89,25 @@ function MainControls() {
         <>
           <Button onClick={endGame}>New Game</Button>
           <div className="h-1" />
+          <Button onClick={drawCard} variant={"red"} disabled={!drawPile.length}>Draw</Button>
+          <Button onClick={dropCard} variant={"red"} disabled={!isValidDrop(idActive)}>Drop</Button>
+          <Button onClick={reshuffle} variant={"red"} disabled={drawPile.length > 0 || !dropPile.length}>
+            Reshuffle
+          </Button>
+          <div className="h-1" />
           {
-            turnCnt === nPlayers? (
-              <Button onClick={nextHandIdx} variant={"green"}>Next Hand</Button>
-            // ): phaseIdx === phaseNames.length? (
-            //   <Button onClick={nextTurn} variant={"green"}>Next Turn</Button>
+            isTurnOn()? (
+              isPhaseOn()? (
+                isBeatOn()? (
+                  <Button onClick={nextBeatCnt} variant={"green"}>{`${phaseNames[phaseIdx]} ${beatCnt}`}</Button>
+                ): (
+                  <Button onClick={nextPhaseIdx} variant={"green"}>Next Phase</Button>
+                )
+              ): (
+                <Button onClick={nextTurn} variant={"green"}>Next Turn</Button>
+              )
             ): (
-              <>
-                {/*<Button onClick={nextBeat} variant={"green"}>Next Beat</Button>*/}
-                {/*<div className="h-1" />*/}
-                <Button onClick={drawCard} variant={"red"} disabled={!drawPile.length}>Draw</Button>
-                <Button onClick={dropCard} variant={"red"} disabled={!isValidDrop(idActive)}>Drop</Button>
-                <Button onClick={reshuffle} variant={"red"} disabled={drawPile.length > 0 || !dropPile.length}>
-                  Reshuffle
-                </Button>
-                <div className="h-1" />
-                {/*<p className={`font-bold text-lg select-none`}>{`?? ${isBeatOn()}`}</p>*/}
-
-                {
-                  isPhaseOn()? (
-                    isBeatOn()? (
-                      <Button onClick={nextBeatCnt} variant={"green"}>{`${phaseNames[phaseIdx]} ${beatCnt}`}</Button>
-                    ): (
-                      <Button onClick={nextPhaseIdx} variant={"green"}>Next Phase</Button>
-                    )
-                  ): (
-                    <Button onClick={nextTurn} variant={"green"}>Next Turn</Button>
-                  )
-                }
-              </>
+              <Button onClick={nextHandIdx} variant={"green"}>Next Hand</Button>
             )
           }
         </>

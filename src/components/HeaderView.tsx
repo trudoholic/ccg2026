@@ -15,7 +15,9 @@ function HeaderView() {
 
   return (
     <div className="flex gap-4 mx-auto justify-center">
-      <p className={`font-bold text-lg select-none`}>{`Hand [${handIdx}] ${playerNames[handIdx]}`}</p>
+      <p className={`font-bold text-lg select-none text-zinc-500`}>
+        {`Hand [${handIdx}] ${playerNames[handIdx]}`}
+      </p>
 
       {isTurnOn()? (
         <>
