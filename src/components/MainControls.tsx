@@ -89,17 +89,32 @@ function MainControls() {
         <>
           <Button onClick={endGame}>New Game</Button>
           <div className="h-1" />
-          <Button onClick={drawCard} variant={"red"} disabled={!drawPile.length}>Draw</Button>
-          <Button onClick={dropCard} variant={"red"} disabled={!isValidDrop(idActive)}>Drop</Button>
-          <Button onClick={reshuffle} variant={"red"} disabled={drawPile.length > 0 || !dropPile.length}>
-            Reshuffle
-          </Button>
-          <div className="h-1" />
           {
             isTurnOn()? (
               isPhaseOn()? (
                 isBeatOn()? (
-                  <Button onClick={nextBeatCnt} variant={"green"}>{`${phaseNames[phaseIdx]} ${beatCnt}`}</Button>
+                  <>
+                    <Button onClick={nextBeatCnt} variant={"green"}>{`${phaseNames[phaseIdx]} ${beatCnt}`}</Button>
+                    {
+                      0 === phaseIdx && drawPile.length? (
+                        <Button onClick={drawCard} variant={"red"}>
+                          {`${phaseNames[0]} ${beatCnt}`}
+                        </Button>
+                      ): null
+                    }
+                    {
+                      0 === phaseIdx && !drawPile.length && dropPile.length? (
+                        <Button onClick={reshuffle} variant={"red"}>Reshuffle</Button>
+                      ): null
+                    }
+                    {
+                      2 === phaseIdx? (
+                        <Button onClick={dropCard} variant={"red"} disabled={!isValidDrop(idActive)}>
+                          {`${phaseNames[2]} ${beatCnt}`}
+                        </Button>
+                      ): null
+                    }
+                  </>
                 ): (
                   <Button onClick={nextPhaseIdx} variant={"green"}>Next Phase</Button>
                 )

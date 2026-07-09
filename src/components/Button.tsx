@@ -12,7 +12,7 @@ export function Button({variant = "primary", className, ...props}: ButtonProps) 
     <button
       {...props}
       className={twMerge(
-        "transition-colors rounded px-2 py-1 disabled:opacity-30 disabled:cursor-not-allowed",
+        "transition-colors rounded px-2 py-1 select-none disabled:opacity-30 disabled:cursor-not-allowed",
         getVariantStyles(variant),
         className,
       )}
