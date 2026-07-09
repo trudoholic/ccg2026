@@ -1,5 +1,5 @@
 import {
-  useFlowStore, phaseNames,
+  useFlowStore, phaseNames, phaseCnt,
   isBeatOn, isPhaseOn, isTurnOn
 } from "../store/useFlowStore"
 import {usePlayersStore} from "../store/usePlayersStore"
@@ -10,7 +10,6 @@ function MainControls() {
   const nPlayers = useFlowStore(s => s.nPlayers)
   const turnIdx = useFlowStore(s => s.turnIdx)
   const phaseIdx = useFlowStore(s => s.phaseIdx)
-  const beatCnt = useFlowStore(s => s.beatCnt)
 
   const setPlayers = useFlowStore(s => s.setPlayers)
   const setHandIdx = useFlowStore(s => s.setHandIdx)
@@ -18,6 +17,10 @@ function MainControls() {
   const nextTurnIdx = useFlowStore(s => s.nextTurnIdx)
   const nextPhaseIdx = useFlowStore(s => s.nextPhaseIdx)
   const nextBeatCnt = useFlowStore(s => s.nextBeatCnt)
+
+  const phaseCaption = useFlowStore(
+    s => `${phaseNames[s.phaseIdx]} ${s.beatCnt} / ${phaseCnt[s.phaseIdx]}`
+  )
 
   const players = usePlayersStore(s => s.players)
   const createPlayers = usePlayersStore(s => s.createPlayers)
@@ -113,12 +116,12 @@ function MainControls() {
               isPhaseOn()? (
                 isBeatOn()? (
                   <>
-                    <Button onClick={nextBeatCnt} variant={"green"}>{`${phaseNames[phaseIdx]} ${beatCnt}`}</Button>
+                    <Button onClick={nextBeatCnt} variant={"green"}>{phaseCaption}</Button>
                     {
                       // DRAW
                       0 === phaseIdx && drawPile.length? (
                         <Button onClick={drawCard} variant={"red"}>
-                          {`${phaseNames[0]} ${beatCnt}`}
+                          {phaseCaption}
                         </Button>
                       ): null
                     }
@@ -131,7 +134,7 @@ function MainControls() {
                       // PLAY
                       1 === phaseIdx? (
                         <Button onClick={playCard} variant={"red"} disabled={!isValidHand(idActive)}>
-                          {`${phaseNames[1]} ${beatCnt}`}
+                          {phaseCaption}
                         </Button>
                       ): null
                     }
@@ -139,7 +142,7 @@ function MainControls() {
                       // DROP
                       2 === phaseIdx? (
                         <Button onClick={dropCard} variant={"red"} disabled={!isValidHand(idActive)}>
-                          {`${phaseNames[2]} ${beatCnt}`}
+                          {phaseCaption}
                         </Button>
                       ): null
                     }

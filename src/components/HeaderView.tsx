@@ -1,43 +1,47 @@
 import {
-  useFlowStore, phaseNames,
+  useFlowStore, phaseNames, phaseCnt,
   isBeatOn, isPhaseOn, isTurnOn
 } from "../store/useFlowStore"
-import {playerNames} from "../store/usePlayersStore"
-
-const beatLim = 4
+import {usePlayersStore, playerNames} from "../store/usePlayersStore"
 
 function HeaderView() {
+  const players = usePlayersStore(s => s.players)
   const handIdx = useFlowStore(s => s.handIdx)
   const turnIdx = useFlowStore(s => s.turnIdx)
   const turnCnt = useFlowStore(s => s.turnCnt)
-  const phaseIdx = useFlowStore(s => s.phaseIdx)
-  const beatCnt = useFlowStore(s => s.beatCnt)
+  const phaseCaption = useFlowStore(
+    s => `[${s.phaseIdx}] ${phaseNames[s.phaseIdx]} ${s.beatCnt} / ${phaseCnt[s.phaseIdx]}`
+  )
 
   return (
-    <div className="flex gap-4 mx-auto justify-center">
-      <p className={`font-bold text-lg select-none text-zinc-500`}>
-        {`Hand [${handIdx}] ${playerNames[handIdx]}`}
-      </p>
+    players.length? (
+        <div className="flex gap-4 mx-auto justify-center">
+          <p className={`font-bold text-lg select-none text-zinc-500`}>
+            {`Hand [${handIdx}] ${playerNames[handIdx]}`}
+          </p>
 
-      {isTurnOn()? (
-        <>
-          <p className={`font-bold text-lg select-none`}>{`Turn [${turnIdx}] ${playerNames[turnIdx]}`}</p>
-          <p className={`font-bold text-lg select-none`}>{`Cnt: ${turnCnt}`}</p>
-          {
-            isPhaseOn()? (
-              <p className={`font-bold text-lg select-none`}>
-                {isBeatOn()? `[${phaseIdx}] ${phaseNames[phaseIdx]} ${beatCnt} / ${beatLim}`: "Next Phase"}
-              </p>
-            ): (
-              <p className={`font-bold text-lg select-none`}>Next Turn</p>
-            )
-          }
-        </>
+          {isTurnOn()? (
+            <>
+              <p className={`font-bold text-lg select-none`}>{`Turn [${turnIdx}] ${playerNames[turnIdx]}`}</p>
+              <p className={`font-bold text-lg select-none`}>{`Cnt: ${turnCnt}`}</p>
+              {
+                isPhaseOn()? (
+                  <p className={`font-bold text-lg select-none`}>
+                    {isBeatOn()? phaseCaption: "Next Phase"}
+                  </p>
+                ): (
+                  <p className={`font-bold text-lg select-none`}>Next Turn</p>
+                )
+              }
+            </>
+          ): (
+            <p className={`font-bold text-lg select-none`}>Next Hand</p>
+          )}
+
+        </div>
       ): (
-        <p className={`font-bold text-lg select-none`}>Next Hand</p>
-      )}
-
-    </div>
+        <h1>Start New Game</h1>
+      )
   )
 }
 

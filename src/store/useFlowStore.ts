@@ -1,9 +1,7 @@
 import { create } from 'zustand'
 
 export const phaseNames = ['Draw', 'Play', 'Drop']
-
-const beatLim = 4
-const phaseLim = phaseNames.length
+export const phaseCnt = [4, 2, 2]
 
 function getNextIdx(idx:number, num:number, reverse:boolean):number {
   if (reverse) {
@@ -37,7 +35,6 @@ interface FlowActions {
   nextTurnIdx: () => void
   nextPhaseIdx: () => void
   nextBeatCnt: () => void
-  nextBeat: () => void
 }
 
 export const useFlowStore = create<FlowState & FlowActions>(
@@ -68,29 +65,12 @@ export const useFlowStore = create<FlowState & FlowActions>(
       beatCnt: state.beatCnt + 1,
     })),
 
-    nextBeat: () => set((state) => (
-      (state.beatCnt < beatLim - 1)? {beatCnt: state.beatCnt + 1}: (
-        (state.phaseIdx < phaseLim - 1)? {beatCnt: 0, phaseIdx: state.phaseIdx + 1}: (
-          (state.turnCnt < state.nPlayers - 1)?
-            {
-              beatCnt: 0, phaseIdx: 0, turnCnt: state.turnCnt + 1,
-              turnIdx: getNextIdx(state.turnIdx, state.nPlayers, false)
-            }:
-            {
-              beatCnt: 0, phaseIdx: 0, turnCnt: 0,
-              handIdx: getNextIdx(state.handIdx, state.nPlayers, false),
-              turnIdx: getNextIdx(state.handIdx, state.nPlayers, false),
-            }
-        )
-      )
-    )),
-
   })
 )
 
 export const isBeatOn = (): boolean => {
   const state = useFlowStore.getState()
-  return state.beatCnt < beatLim
+  return state.beatCnt < phaseCnt[state.phaseIdx]
 }
 
 export const isPhaseOn = (): boolean => {
