@@ -30,6 +30,7 @@ function MainControls() {
   const updateDrawPile = useDeckStore(s => s.updateDrawPile)
   const updateDropPile = useDeckStore(s => s.updateDropPile)
   const idActive = useDeckStore(s => s.idActive)
+  const setActive = useDeckStore(s => s.setActive)
 
   function startNewGame(n:number) {
     initDeck()
@@ -72,9 +73,20 @@ function MainControls() {
   }
 
   // PLAY -----------------------------------------------------------------------------------------
+  function playCard() {
+    if (isValidHand(idActive)) {
+      const zoneHand = 0, zoneKeep = 1
+      const zones = players[turnIdx].zones
+      const newZones = zones.map((z, zi) => (zoneHand === zi? {
+        ...z, cards: z.cards.filter(c => idActive !== c)
+      }: zoneKeep === zi? {
+        ...z, cards: [...z.cards, idActive]
+      }: z))
+      updatePlayer(turnIdx, {zones: newZones})
+    }
+  }
 
   // DROP -----------------------------------------------------------------------------------------
-
   function dropCard() {
     if (isValidHand(idActive)) {
       const zoneHand = 0
@@ -86,6 +98,7 @@ function MainControls() {
 
       const pile = [...dropPile, idActive]
       updateDropPile(pile)
+      setActive(0)
     }
   }
 
@@ -102,6 +115,7 @@ function MainControls() {
                   <>
                     <Button onClick={nextBeatCnt} variant={"green"}>{`${phaseNames[phaseIdx]} ${beatCnt}`}</Button>
                     {
+                      // DRAW
                       0 === phaseIdx && drawPile.length? (
                         <Button onClick={drawCard} variant={"red"}>
                           {`${phaseNames[0]} ${beatCnt}`}
@@ -114,6 +128,15 @@ function MainControls() {
                       ): null
                     }
                     {
+                      // PLAY
+                      1 === phaseIdx? (
+                        <Button onClick={playCard} variant={"red"} disabled={!isValidHand(idActive)}>
+                          {`${phaseNames[1]} ${beatCnt}`}
+                        </Button>
+                      ): null
+                    }
+                    {
+                      // DROP
                       2 === phaseIdx? (
                         <Button onClick={dropCard} variant={"red"} disabled={!isValidHand(idActive)}>
                           {`${phaseNames[2]} ${beatCnt}`}
