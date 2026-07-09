@@ -51,11 +51,13 @@ function MainControls() {
     nextTurnIdx()
   }
 
+  // DRAW -----------------------------------------------------------------------------------------
   function drawCard() {
     if (drawPile.length) {
       const pile = [...drawPile]
       const card = pile.pop() ?? 0
       updateDrawPile(pile)
+
       const newZones = players[turnIdx].zones.map((z, i) => (0 === i? {
         ...z, cards: [...z.cards, card]
       }: z))
@@ -63,14 +65,18 @@ function MainControls() {
     }
   }
 
-  function isValidDrop(id:number) {
+  function isValidHand(id:number) {
     const zoneHand = 0
     const cards = players[turnIdx]?.zones[zoneHand].cards ?? []
     return cards.includes(id)
   }
 
+  // PLAY -----------------------------------------------------------------------------------------
+
+  // DROP -----------------------------------------------------------------------------------------
+
   function dropCard() {
-    if (isValidDrop(idActive)) {
+    if (isValidHand(idActive)) {
       const zoneHand = 0
       const zones = players[turnIdx].zones
       const newZones = zones.map((z, zi) => (zoneHand === zi? {
@@ -109,7 +115,7 @@ function MainControls() {
                     }
                     {
                       2 === phaseIdx? (
-                        <Button onClick={dropCard} variant={"red"} disabled={!isValidDrop(idActive)}>
+                        <Button onClick={dropCard} variant={"red"} disabled={!isValidHand(idActive)}>
                           {`${phaseNames[2]} ${beatCnt}`}
                         </Button>
                       ): null
