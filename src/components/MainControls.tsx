@@ -66,6 +66,8 @@ function MainControls() {
         ...z, cards: [...z.cards, card]
       }: z))
       updatePlayer(turnIdx, {zones: newZones})
+
+      nextBeatCnt()
     }
   }
 
@@ -86,6 +88,9 @@ function MainControls() {
         ...z, cards: [...z.cards, idActive]
       }: z))
       updatePlayer(turnIdx, {zones: newZones})
+
+      setActive(0)
+      nextBeatCnt()
     }
   }
 
@@ -101,7 +106,9 @@ function MainControls() {
 
       const pile = [...dropPile, idActive]
       updateDropPile(pile)
+
       setActive(0)
+      nextBeatCnt()
     }
   }
 
@@ -116,7 +123,7 @@ function MainControls() {
               isPhaseOn()? (
                 isBeatOn()? (
                   <>
-                    <Button onClick={nextBeatCnt} variant={"green"}>{phaseCaption}</Button>
+                    {/*<Button onClick={nextBeatCnt} variant={"green"}>{phaseCaption}</Button>*/}
                     {
                       // DRAW
                       0 === phaseIdx && drawPile.length? (
@@ -148,13 +155,13 @@ function MainControls() {
                     }
                   </>
                 ): (
-                  <Button onClick={nextPhaseIdx} variant={"green"}>Next Phase</Button>
+                  <Button onClick={nextPhaseIdx} variant={"green"}>End Phase</Button>
                 )
               ): (
-                <Button onClick={nextTurn} variant={"green"}>Next Turn</Button>
+                <Button onClick={nextTurn} variant={"green"}>End Turn</Button>
               )
             ): (
-              <Button onClick={nextHandIdx} variant={"green"}>Next Hand</Button>
+              <Button onClick={nextHandIdx} variant={"green"}>End Hand</Button>
             )
           }
         </>

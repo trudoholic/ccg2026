@@ -27,15 +27,15 @@ function HeaderView() {
               {
                 isPhaseOn()? (
                   <p className={`font-bold text-lg select-none`}>
-                    {isBeatOn()? phaseCaption: "Next Phase"}
+                    {isBeatOn()? phaseCaption: "End Phase"}
                   </p>
                 ): (
-                  <p className={`font-bold text-lg select-none`}>Next Turn</p>
+                  <p className={`font-bold text-lg select-none`}>End Turn</p>
                 )
               }
             </>
           ): (
-            <p className={`font-bold text-lg select-none`}>Next Hand</p>
+            <p className={`font-bold text-lg select-none`}>End Hand</p>
           )}
 
         </div>
