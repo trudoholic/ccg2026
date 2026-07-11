@@ -5,6 +5,7 @@ import {
 import {usePlayersStore} from "../store/usePlayersStore"
 import {useDeckStore} from "../store/useDeckStore"
 import {Button} from "./Button"
+import {rnd} from "../utils"
 
 function MainControls() {
   const nPlayers = useFlowStore(s => s.nPlayers)
@@ -47,10 +48,8 @@ function MainControls() {
     setPlayers(0)
   }
 
-  const rnd = (n:number) => Math.floor(Math.random() * n) + 1
-
   function nextTurn() {
-    const newScore = players[turnIdx].score + rnd(6)
+    const newScore = players[turnIdx].score + rnd(6, 1)
     updatePlayer(turnIdx, {score: newScore})
     nextTurnIdx()
   }
@@ -123,7 +122,6 @@ function MainControls() {
               isPhaseOn()? (
                 isBeatOn()? (
                   <>
-                    {/*<Button onClick={nextBeatCnt} variant={"green"}>{phaseCaption}</Button>*/}
                     {
                       // DRAW
                       0 === phaseIdx && drawPile.length? (

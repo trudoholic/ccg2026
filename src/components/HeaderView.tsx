@@ -9,6 +9,7 @@ function HeaderView() {
   const handIdx = useFlowStore(s => s.handIdx)
   const turnIdx = useFlowStore(s => s.turnIdx)
   const turnCnt = useFlowStore(s => s.turnCnt)
+  const phaseRules = useFlowStore(s => s.phaseRules)
   const phaseCaption = useFlowStore(
     s => `[${s.phaseIdx}] ${phaseNames[s.phaseIdx]} ${s.beatCnt} / ${phaseCnt[s.phaseIdx]}`
   )
@@ -16,6 +17,10 @@ function HeaderView() {
   return (
     players.length? (
         <div className="flex gap-4 mx-auto justify-center">
+          <p className={`font-bold text-lg select-none text-green-500`}>
+            {`Draw: ${phaseRules[0]} Play: ${phaseRules[1]}`}
+          </p>
+
           <p className={`font-bold text-lg select-none text-zinc-500`}>
             {`Hand [${handIdx}] ${playerNames[handIdx]}`}
           </p>

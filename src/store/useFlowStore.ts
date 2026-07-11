@@ -1,4 +1,5 @@
 import { create } from 'zustand'
+import {rnd} from "../utils"
 
 export const phaseNames = ['Draw', 'Play', 'Drop']
 export const phaseCnt = [4, 2, 2]
@@ -14,6 +15,10 @@ function getNextIdx(idx:number, num:number, reverse:boolean):number {
   }
 }
 
+function getPhaseRules(): number[] {
+  return [rnd(6, 1), rnd(6, 1)]
+}
+
 const initialState = {
   nPlayers: 0,
   handIdx: 0,
@@ -21,6 +26,7 @@ const initialState = {
   turnIdx: 0,
   turnCnt: 0,
   beatCnt: 0,
+  phaseRules: getPhaseRules(),
 }
 
 type FlowState = typeof initialState
@@ -55,6 +61,7 @@ export const useFlowStore = create<FlowState & FlowActions>(
       turnIdx: getNextIdx(state.turnIdx, state.nPlayers, false),
       turnCnt: state.turnCnt + 1,
       phaseIdx: 0,
+      phaseRules: getPhaseRules(),
     })),
 
     nextPhaseIdx: () => set((state) => ({

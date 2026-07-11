@@ -48,5 +48,3 @@ export const usePlayersStore = create<PlayersState & PlayersActions>(
     )),
   })
 )
-
-// const range = (n: number) => [...Array(n).keys()]
