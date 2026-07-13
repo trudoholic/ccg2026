@@ -3,6 +3,7 @@ import {
   isBeatOn, isPhaseOn, isTurnOn
 } from "../store/useFlowStore"
 import {usePlayersStore, playerNames} from "../store/usePlayersStore"
+import Dice from "./Dice"
 
 function HeaderView() {
   const players = usePlayersStore(s => s.players)
@@ -16,10 +17,16 @@ function HeaderView() {
 
   return (
     players.length? (
-        <div className="flex gap-4 mx-auto justify-center">
+        <div className="flex gap-4 mx-auto items-center justify-center">
           <p className={`font-bold text-lg select-none text-green-500`}>
-            {`Draw: ${phaseRules[0]} Play: ${phaseRules[1]}`}
+            {`Draw: ${phaseRules[0]}`}
           </p>
+          <Dice n={phaseRules[0] - 1}/>
+
+          <p className={`font-bold text-lg select-none text-green-500`}>
+            {`Play: ${phaseRules[1]}`}
+          </p>
+          <Dice n={phaseRules[1] - 1}/>
 
           <p className={`font-bold text-lg select-none text-zinc-500`}>
             {`Hand [${handIdx}] ${playerNames[handIdx]}`}
