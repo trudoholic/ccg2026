@@ -48,3 +48,11 @@ export const usePlayersStore = create<PlayersState & PlayersActions>(
     )),
   })
 )
+
+export const playerHasCards = (turnIdx: number, phaseIdx: number): boolean => {
+  if (0 === phaseIdx) return true
+  const state = usePlayersStore.getState()
+  const zoneHand = 0
+  const zones = state.players[turnIdx].zones
+  return zones[zoneHand].cards.length > 0
+}

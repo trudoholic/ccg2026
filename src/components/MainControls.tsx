@@ -2,7 +2,7 @@ import {
   useFlowStore, phaseNames,
   isBeatOn, isPhaseOn, isTurnOn
 } from "../store/useFlowStore"
-import {usePlayersStore} from "../store/usePlayersStore"
+import {usePlayersStore, playerHasCards} from "../store/usePlayersStore"
 import {useDeckStore} from "../store/useDeckStore"
 import {Button} from "./Button"
 import {rnd} from "../utils"
@@ -112,10 +112,7 @@ function MainControls() {
   }
 
   function hasCards(): boolean {
-    if (0 === phaseIdx) return true
-    const zoneHand = 0
-    const zones = players[turnIdx].zones
-    return zones[zoneHand].cards.length > 0
+    return playerHasCards(turnIdx, phaseIdx)
   }
 
   return (
