@@ -2,7 +2,7 @@ import {
   useFlowStore, phaseNames,
   isBeatOn, isPhaseOn, isTurnOn
 } from "../store/useFlowStore"
-import {usePlayersStore, playerNames} from "../store/usePlayersStore"
+import {usePlayersStore, playerNames, playerHasCards} from "../store/usePlayersStore"
 import Dice from "./Dice"
 
 function HeaderView() {
@@ -10,10 +10,15 @@ function HeaderView() {
   const handIdx = useFlowStore(s => s.handIdx)
   const turnIdx = useFlowStore(s => s.turnIdx)
   const turnCnt = useFlowStore(s => s.turnCnt)
+  const phaseIdx = useFlowStore(s => s.phaseIdx)
   const phaseRules = useFlowStore(s => s.phaseRules)
   const phaseCaption = useFlowStore(
-    s => `[${s.phaseIdx}] ${phaseNames[s.phaseIdx]} ${s.beatCnt} / ${s.phaseRules[s.phaseIdx]}`
+    s => `${phaseNames[s.phaseIdx]} ${s.beatCnt} / ${s.phaseRules[s.phaseIdx]}`
   )
+
+  function hasCards(): boolean {
+    return playerHasCards(turnIdx, phaseIdx)
+  }
 
   return (
     players.length? (
@@ -29,17 +34,17 @@ function HeaderView() {
           <Dice n={phaseRules[1] - 1}/>
 
           <p className={`font-bold text-lg select-none text-zinc-500`}>
-            {`Hand [${handIdx}] ${playerNames[handIdx]}`}
+            {`Hand: ${playerNames[handIdx]}`}
           </p>
 
           {isTurnOn()? (
             <>
-              <p className={`font-bold text-lg select-none`}>{`Turn [${turnIdx}] ${playerNames[turnIdx]}`}</p>
+              <p className={`font-bold text-lg select-none`}>{`Turn: ${playerNames[turnIdx]}`}</p>
               <p className={`font-bold text-lg select-none`}>{`Cnt: ${turnCnt}`}</p>
               {
                 isPhaseOn()? (
                   <p className={`font-bold text-lg select-none`}>
-                    {isBeatOn()? phaseCaption: "End Phase"}
+                    {(isBeatOn() && hasCards())? phaseCaption: `End ${phaseNames[phaseIdx]}`}
                   </p>
                 ): (
                   <p className={`font-bold text-lg select-none`}>End Turn</p>
