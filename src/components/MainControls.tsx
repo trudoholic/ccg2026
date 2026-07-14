@@ -1,5 +1,5 @@
 import {
-  useFlowStore, phaseNames, phaseCnt,
+  useFlowStore, phaseNames,
   isBeatOn, isPhaseOn, isTurnOn
 } from "../store/useFlowStore"
 import {usePlayersStore} from "../store/usePlayersStore"
@@ -20,7 +20,7 @@ function MainControls() {
   const nextBeatCnt = useFlowStore(s => s.nextBeatCnt)
 
   const phaseCaption = useFlowStore(
-    s => `${phaseNames[s.phaseIdx]} ${s.beatCnt} / ${phaseCnt[s.phaseIdx]}`
+    s => `${phaseNames[s.phaseIdx]} ${s.beatCnt} / ${s.phaseRules[s.phaseIdx]}`
   )
 
   const players = usePlayersStore(s => s.players)

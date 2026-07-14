@@ -2,7 +2,6 @@ import { create } from 'zustand'
 import {rnd} from "../utils"
 
 export const phaseNames = ['Draw', 'Play', 'Drop']
-export const phaseCnt = [4, 2, 2]
 
 function getNextIdx(idx:number, num:number, reverse:boolean):number {
   if (reverse) {
@@ -16,7 +15,7 @@ function getNextIdx(idx:number, num:number, reverse:boolean):number {
 }
 
 function getPhaseRules(): number[] {
-  return [rnd(6, 1), rnd(6, 1)]
+  return [rnd(6, 1), rnd(6, 1), 2]
 }
 
 const initialState = {
@@ -77,7 +76,7 @@ export const useFlowStore = create<FlowState & FlowActions>(
 
 export const isBeatOn = (): boolean => {
   const state = useFlowStore.getState()
-  return state.beatCnt < phaseCnt[state.phaseIdx]
+  return state.beatCnt < state.phaseRules[state.phaseIdx]
 }
 
 export const isPhaseOn = (): boolean => {

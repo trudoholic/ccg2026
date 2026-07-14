@@ -1,5 +1,5 @@
 import {
-  useFlowStore, phaseNames, phaseCnt,
+  useFlowStore, phaseNames,
   isBeatOn, isPhaseOn, isTurnOn
 } from "../store/useFlowStore"
 import {usePlayersStore, playerNames} from "../store/usePlayersStore"
@@ -12,7 +12,7 @@ function HeaderView() {
   const turnCnt = useFlowStore(s => s.turnCnt)
   const phaseRules = useFlowStore(s => s.phaseRules)
   const phaseCaption = useFlowStore(
-    s => `[${s.phaseIdx}] ${phaseNames[s.phaseIdx]} ${s.beatCnt} / ${phaseCnt[s.phaseIdx]}`
+    s => `[${s.phaseIdx}] ${phaseNames[s.phaseIdx]} ${s.beatCnt} / ${s.phaseRules[s.phaseIdx]}`
   )
 
   return (
