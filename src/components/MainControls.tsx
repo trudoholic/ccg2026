@@ -111,6 +111,13 @@ function MainControls() {
     }
   }
 
+  function hasCards(): boolean {
+    if (0 === phaseIdx) return true
+    const zoneHand = 0
+    const zones = players[turnIdx].zones
+    return zones[zoneHand].cards.length > 0
+  }
+
   return (
     <div className="flex flex-col gap-1">
       {nPlayers? (
@@ -120,7 +127,7 @@ function MainControls() {
           {
             isTurnOn()? (
               isPhaseOn()? (
-                isBeatOn()? (
+                (isBeatOn() && hasCards())? (
                   <>
                     {
                       // DRAW
@@ -153,7 +160,7 @@ function MainControls() {
                     }
                   </>
                 ): (
-                  <Button onClick={nextPhaseIdx} variant={"green"}>End Phase</Button>
+                  <Button onClick={nextPhaseIdx} variant={"green"}>{`End ${phaseNames[phaseIdx]}`}</Button>
                 )
               ): (
                 <Button onClick={nextTurn} variant={"green"}>End Turn</Button>
