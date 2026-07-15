@@ -49,9 +49,14 @@ function MainControls() {
   }
 
   function nextTurn() {
+    setActive(0)
     const newScore = players[turnIdx].score + rnd(6, 1)
     updatePlayer(turnIdx, {score: newScore})
     nextTurnIdx()
+  }
+
+  function setActiveLast(cards: number[]) {
+    if (cards.length) setActive(cards[cards.length - 1])
   }
 
   // DRAW -----------------------------------------------------------------------------------------
@@ -66,6 +71,8 @@ function MainControls() {
       }: z))
       updatePlayer(turnIdx, {zones: newZones})
 
+      const zoneHand = 0
+      setActiveLast(newZones[zoneHand].cards)
       nextBeatCnt()
     }
   }
@@ -88,7 +95,7 @@ function MainControls() {
       }: z))
       updatePlayer(turnIdx, {zones: newZones})
 
-      setActive(0)
+      setActiveLast(newZones[zoneHand].cards)
       nextBeatCnt()
     }
   }
@@ -106,7 +113,7 @@ function MainControls() {
       const pile = [...dropPile, idActive]
       updateDropPile(pile)
 
-      setActive(0)
+      setActiveLast(newZones[zoneHand].cards)
       nextBeatCnt()
     }
   }
