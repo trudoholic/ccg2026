@@ -6,6 +6,7 @@ type TZone = {
   cards: number[]
 }
 
+export const handLim = 3
 export const zoneNames = ['Hand', 'Keep']
 const zones: TZone[] = zoneNames.map((name, idx) => ({id: idx, name, cards: []}))
 
@@ -60,7 +61,15 @@ export const playerHasCards = (turnIdx: number, phaseIdx: number): boolean => {
   if (1 === phaseIdx) return zones[zoneHand].cards.length > 0
 
   // Drop
-  const handLim = 3
   if (2 === phaseIdx) return zones[zoneHand].cards.length > handLim
   return false
+}
+
+export const extraCards = (turnIdx: number, phaseIdx: number): number => {
+  // Drop
+  const state = usePlayersStore.getState()
+  const zoneHand = 0
+  const zones = state.players[turnIdx].zones
+  if (2 === phaseIdx) return zones[zoneHand].cards.length - handLim
+  return 0
 }
