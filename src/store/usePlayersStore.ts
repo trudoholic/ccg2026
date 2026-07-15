@@ -50,9 +50,17 @@ export const usePlayersStore = create<PlayersState & PlayersActions>(
 )
 
 export const playerHasCards = (turnIdx: number, phaseIdx: number): boolean => {
+  // Draw
   if (0 === phaseIdx) return true
   const state = usePlayersStore.getState()
   const zoneHand = 0
   const zones = state.players[turnIdx].zones
-  return zones[zoneHand].cards.length > 0
+
+  // Play
+  if (1 === phaseIdx) return zones[zoneHand].cards.length > 0
+
+  // Drop
+  const handLim = 3
+  if (2 === phaseIdx) return zones[zoneHand].cards.length > handLim
+  return false
 }

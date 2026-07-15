@@ -76,6 +76,7 @@ export const useFlowStore = create<FlowState & FlowActions>(
 
 export const isBeatOn = (): boolean => {
   const state = useFlowStore.getState()
+  if (2 === state.phaseIdx) return true // Drop
   return state.beatCnt < state.phaseRules[state.phaseIdx]
 }
 
