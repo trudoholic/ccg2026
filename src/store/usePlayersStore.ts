@@ -68,6 +68,9 @@ export const playerHasCards = (turnIdx: number, phaseIdx: number): boolean => {
 export const extraCards = (turnIdx: number, phaseIdx: number): number => {
   // Drop
   const state = usePlayersStore.getState()
+  const player = state.players[turnIdx]
+  if (!player) return 0
+
   const zoneHand = 0
   const zones = state.players[turnIdx].zones
   if (2 === phaseIdx) return zones[zoneHand].cards.length - handLim

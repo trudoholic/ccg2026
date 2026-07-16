@@ -6,8 +6,13 @@ import {usePlayersStore, playerHasCards} from "../store/usePlayersStore"
 import {useDeckStore} from "../store/useDeckStore"
 import {Button} from "./Button"
 import {rnd} from "../utils"
+import useGame from "../hooks/useGame"
 
 function MainControls() {
+  const {
+    phaseCaption,
+  } = useGame()
+
   const nPlayers = useFlowStore(s => s.nPlayers)
   const turnIdx = useFlowStore(s => s.turnIdx)
   const phaseIdx = useFlowStore(s => s.phaseIdx)
@@ -18,10 +23,6 @@ function MainControls() {
   const nextTurnIdx = useFlowStore(s => s.nextTurnIdx)
   const nextPhaseIdx = useFlowStore(s => s.nextPhaseIdx)
   const nextBeatCnt = useFlowStore(s => s.nextBeatCnt)
-
-  const phaseCaption = useFlowStore(
-    s => `${phaseNames[s.phaseIdx]} ${s.beatCnt} / ${s.phaseRules[s.phaseIdx]}`
-  )
 
   const players = usePlayersStore(s => s.players)
   const createPlayers = usePlayersStore(s => s.createPlayers)
@@ -37,6 +38,7 @@ function MainControls() {
   const setActive = useDeckStore(s => s.setActive)
 
   function startNewGame(n:number) {
+    setActive(0)
     initDeck()
     createPlayers(n)
     setPlayers(n)

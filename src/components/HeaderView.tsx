@@ -2,33 +2,24 @@ import {
   useFlowStore, phaseNames,
   isBeatOn, isPhaseOn, isTurnOn
 } from "../store/useFlowStore"
-import {
-  usePlayersStore, playerNames,
-  playerHasCards, extraCards
-} from "../store/usePlayersStore"
+import {usePlayersStore, playerNames, playerHasCards} from "../store/usePlayersStore"
 import Dice from "./Dice"
+import useGame from "../hooks/useGame"
 
 function HeaderView() {
+  const {
+    phaseCaption,
+  } = useGame()
+
   const players = usePlayersStore(s => s.players)
   const handIdx = useFlowStore(s => s.handIdx)
   const turnIdx = useFlowStore(s => s.turnIdx)
   const turnCnt = useFlowStore(s => s.turnCnt)
   const phaseIdx = useFlowStore(s => s.phaseIdx)
   const phaseRules = useFlowStore(s => s.phaseRules)
-  const phaseCaption = useFlowStore(
-    s => `${phaseNames[s.phaseIdx]}`
-  )
-  const phaseCaption_ = useFlowStore(
-    s => ` ${s.beatCnt} / ${s.phaseRules[s.phaseIdx]}`
-  )
 
   function hasCards(): boolean {
     return playerHasCards(turnIdx, phaseIdx)
-  }
-
-  function hasExtraCards() {
-    const extraCards_ = extraCards(turnIdx, phaseIdx)
-    return extraCards_ > 0? ` ${extraCards_}`: ""
   }
 
   return (
@@ -55,9 +46,7 @@ function HeaderView() {
               {
                 isPhaseOn()? (
                   <p className={`font-bold text-lg select-none`}>
-                    {(isBeatOn() && hasCards())? (
-                      phaseCaption + (phaseIdx < 2? phaseCaption_: hasExtraCards())
-                    ): `End ${phaseNames[phaseIdx]}`}
+                    {(isBeatOn() && hasCards())? phaseCaption: `End ${phaseNames[phaseIdx]}`}
                   </p>
                 ): (
                   <p className={`font-bold text-lg select-none`}>End Turn</p>

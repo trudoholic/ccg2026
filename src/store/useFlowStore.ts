@@ -16,6 +16,7 @@ function getNextIdx(idx:number, num:number, reverse:boolean):number {
 
 function getPhaseRules(): number[] {
   return [rnd(6, 1), rnd(6, 1), 2]
+  // return [6, 1, 2]
 }
 
 const initialState = {
@@ -54,11 +55,13 @@ export const useFlowStore = create<FlowState & FlowActions>(
       handIdx: getNextIdx(state.handIdx, state.nPlayers, false),
       turnIdx: getNextIdx(state.handIdx, state.nPlayers, false),
       turnCnt: 0,
+      beatCnt: 0,
     })),
 
     nextTurnIdx: () => set((state) => ({
       turnIdx: getNextIdx(state.turnIdx, state.nPlayers, false),
       turnCnt: state.turnCnt + 1,
+      beatCnt: 0,
       phaseIdx: 0,
       phaseRules: getPhaseRules(),
     })),
